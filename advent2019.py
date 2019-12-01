@@ -13,7 +13,7 @@ def main():
     args = parser.parse_args()
 
     script_dir = pathlib.Path(__file__).parent
-    solution_filenames = (f for f in os.listdir(script_dir) if "sol" in f)
+    solution_filenames = (f for f in os.listdir(script_dir) if f[:3] == "sol")
     solved_days = sorted(f[3:-3] for f in solution_filenames)
     puzzles = args.puzzles or solved_days
 
