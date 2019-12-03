@@ -22,7 +22,10 @@ def main():
         if args.data_file is not None:
             data_filename = args.data_file
         else:
-            data_filename = f"data/{puzzle}.txt"
+            if (fname := puzzle[:-1] + ".txt") in os.listdir(script_dir / "data"):
+                data_filename = "data/" + fname
+            else:
+                data_filename = f"data/{puzzle}.txt"
         with open(data_filename, "r") as data_file:
             data = data_file.read()
 
