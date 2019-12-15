@@ -1,12 +1,17 @@
 from dataclasses import dataclass
 import enum
-from queue import Queue
 from typing import Dict, Callable, List
 
 
 class ParameterMode(enum.IntEnum):
     POSITION = 0
     IMMEDIATE = 1
+
+
+class StepResult(enum.IntEnum):
+    CONTINUE = 0
+    HALT = 1
+    INPUT = 2
 
 
 @dataclass
@@ -25,7 +30,7 @@ class ComputerContext:
 class OpCode:
     code: int
     num_parameters: int
-    run: Callable[["IntCodeComputer", List[Parameter], ComputerContext], bool]
+    run: Callable[["IntCodeComputer", List[Parameter], ComputerContext], StepResult]
 
 
 class IntCodeComputer:
@@ -35,7 +40,7 @@ class IntCodeComputer:
         self.opcodes: Dict[int, OpCode] = dict((opcode.code, opcode) for opcode in opcodes)
         self.context = ComputerContext()
 
-    def run_step(self) -> bool:
+    def run_step(self) -> StepResult:
         """Returns True if should terminate"""
         op = self.state[self.counter]
         opcode = self.opcodes[int(str(op)[-2:])]
@@ -61,31 +66,36 @@ class IntCodeComputer:
         else:
             raise NotImplementedError()
 
+    def run(self) -> StepResult:
+        while (result := self.run_step()) == StepResult.CONTINUE:
+            pass
+        return result
 
-def _add(computer: IntCodeComputer, parameters: List[Parameter]) -> bool:
+
+def _add(computer: IntCodeComputer, parameters: List[Parameter]) -> StepResult:
     input1 = computer.get_value(parameters[0])
     input2 = computer.get_value(parameters[1])
     computer.set_value(input1 + input2, parameters[2])
     computer.counter += 4
-    return False
+    return StepResult.CONTINUE
 
 
 AddOpCode = OpCode(1, 3, _add)
 
 
-def _multiply(computer: IntCodeComputer, parameters: List[Parameter]):
+def _multiply(computer: IntCodeComputer, parameters: List[Parameter]) -> StepResult:
     input1 = computer.get_value(parameters[0])
     input2 = computer.get_value(parameters[1])
     computer.set_value(input1 * input2, parameters[2])
     computer.counter += 4
-    return False
+    return StepResult.CONTINUE
 
 
 MultiplyOpCode = OpCode(2, 3, _multiply)
 
 
-def _halt(computer: IntCodeComputer, parameters: List[Parameter]):
-    return True
+def _halt(computer: IntCodeComputer, parameters: List[Parameter]) -> StepResult:
+    return StepResult.HALT
 
 
 HaltOpCode = OpCode(99, 0, _halt)
