@@ -17,4 +17,4 @@ def run(data):
 
         output.append(row_output)
 
-    return "\n".join("".join("X" if x == 0 else " " for x in row) for row in output)
+    return "\n".join("".join("X" if x == 1 else " " for x in row) for row in output)

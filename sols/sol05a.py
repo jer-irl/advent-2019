@@ -1,32 +1,8 @@
-from typing import List
-
-from sols.sol02a import IntCodeComputer, OpCode, AddOpCode, MultiplyOpCode, HaltOpCode, Parameter, StepResult
-
-
-def _input(computer: IntCodeComputer, parameters: List[Parameter]) -> StepResult:
-    if len(computer.context.input) == 0:
-        return StepResult.INPUT
-    input_value = computer.context.input.pop(0)
-    computer.set_value(input_value, parameters[0])
-    computer.counter += 2
-    return StepResult.CONTINUE
-
-
-InputOpCode = OpCode(3, 1, _input)
-
-
-def _output(computer: IntCodeComputer, parameters: List[Parameter]) -> StepResult:
-    output_value = computer.get_value(parameters[0])
-    computer.context.output.append(output_value)
-    computer.counter += 2
-    return StepResult.CONTINUE
-
-
-OutputOpCode = OpCode(4, 1, _output)
+from . import IntCodeComputer, OPCODES
 
 
 def run_prog(program):
-    computer = IntCodeComputer(program, [AddOpCode, MultiplyOpCode, HaltOpCode, InputOpCode, OutputOpCode])
+    computer = IntCodeComputer(program, OPCODES)
     computer.context.input.append(1)
     while not computer.run_step():
         pass

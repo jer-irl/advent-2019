@@ -1,6 +1,6 @@
 import itertools
 
-from sols.sol05b import IntCodeComputer, OPCODES
+from . import IntCodeComputer, OPCODES
 
 
 def calculate_output(program, setting):
