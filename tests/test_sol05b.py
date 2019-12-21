@@ -1,6 +1,6 @@
 from typing import List
 
-from sol05b import IntCodeComputer, OPCODES
+from sols.sol05b import IntCodeComputer, OPCODES
 
 
 def run_with_input(program: List[int], input_values: List[int]):

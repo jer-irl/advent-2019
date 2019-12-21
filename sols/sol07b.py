@@ -1,7 +1,7 @@
 import itertools
 
-from sol05b import StepResult
-from sol07a import IntCodeComputer, OPCODES
+from sols.sol05b import StepResult
+from sols.sol07a import IntCodeComputer, OPCODES
 
 
 def calculate_output(program, setting):

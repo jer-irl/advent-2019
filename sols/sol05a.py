@@ -1,6 +1,6 @@
 from typing import List
 
-from sol02a import IntCodeComputer, OpCode, AddOpCode, MultiplyOpCode, HaltOpCode, Parameter, StepResult
+from sols.sol02a import IntCodeComputer, OpCode, AddOpCode, MultiplyOpCode, HaltOpCode, Parameter, StepResult
 
 
 def _input(computer: IntCodeComputer, parameters: List[Parameter]) -> StepResult:

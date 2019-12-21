@@ -1,4 +1,4 @@
-from sol07b import calculate_output
+from sols.sol07b import calculate_output
 
 
 def test_calculate_output():

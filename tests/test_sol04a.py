@@ -1,4 +1,4 @@
-from sol04a import satisfies
+from sols.sol04a import satisfies
 
 
 def test_satisfies():

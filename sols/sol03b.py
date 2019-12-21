@@ -1,4 +1,4 @@
-from sol03a import (
+from sols.sol03a import (
     construct_steps,
     construct_locations,
     get_segments,

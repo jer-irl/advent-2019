@@ -1,6 +1,6 @@
 from typing import List
 
-from sol05a import (
+from sols.sol05a import (
     OpCode, IntCodeComputer, AddOpCode, MultiplyOpCode, HaltOpCode, InputOpCode, OutputOpCode, Parameter, StepResult
 )
 

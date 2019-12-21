@@ -1,4 +1,4 @@
-from sol07a import calculate_output, IntCodeComputer, OPCODES
+from sols.sol07a import calculate_output
 
 
 def test_calculate_output():

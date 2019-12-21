@@ -1,4 +1,4 @@
-from sol04a import satisfies as satisfies_a
+from sols.sol04a import satisfies as satisfies_a
 
 
 def satisfies(password):

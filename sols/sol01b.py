@@ -1,4 +1,4 @@
-from sol01a import fuel_for_mass
+from sols.sol01a import fuel_for_mass
 
 
 def total_fuel_for_mass(mass):

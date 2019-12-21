@@ -1,4 +1,4 @@
-from sol02a import run_prog
+from sols.sol02a import run_prog
 
 
 def test_run_prog():

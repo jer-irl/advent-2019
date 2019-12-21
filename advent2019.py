@@ -1,6 +1,5 @@
 import argparse
 import importlib
-import itertools
 import os
 import pathlib
 import sys
@@ -13,7 +12,7 @@ def main():
     args = parser.parse_args()
 
     script_dir = pathlib.Path(__file__).parent
-    solution_filenames = (f for f in os.listdir(script_dir) if f[:3] == "sol")
+    solution_filenames = (f for f in os.listdir(script_dir / "sols") if f[:3] == "sol")
     solved_days = sorted(f[3:-3] for f in solution_filenames)
     puzzles = args.puzzles or solved_days
 
@@ -29,7 +28,7 @@ def main():
         with open(data_filename, "r") as data_file:
             data = data_file.read()
 
-        solution_module = importlib.import_module(f"sol{puzzle}")
+        solution_module = importlib.import_module(f"sols.sol{puzzle}")
         result = solution_module.run(data)
 
         print(f"Puzzle {puzzle} answer with data file {data_filename}:")

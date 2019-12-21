@@ -1,4 +1,4 @@
-from sol03b import run
+from sols.sol03b import run
 
 
 def test_run():
