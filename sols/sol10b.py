@@ -1,5 +1,4 @@
 from collections import defaultdict
-import itertools
 import math
 
 from sols.sol10a import gcd, get_asteroids, visible_asteroids
@@ -20,7 +19,7 @@ def get_vaporizations(asteroids, station):
 
     angle_buckets = dict()
     for key, val in slope_buckets.items():
-        angle_buckets[math.atan(key[1], key[0])] = val
+        angle_buckets[math.atan2(key[1], key[0])] = val
 
     items = list(angle_buckets.items())
     items.sort(key=lambda item: item[0])
