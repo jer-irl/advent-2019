@@ -32,6 +32,8 @@ def draw_board(board, screen, score):
 def run_game(computer: IntCodeComputer, screen) -> int:
     board = defaultdict(int)
     score = 0
+    sleep_time = 0.2
+    should_cheat = False
     while True:
         computer_result = computer.run()
         output_tuples = [tuple(computer.context.output[x:x + 3]) for x in range(0, len(computer.context.output), 3)]
@@ -50,19 +52,43 @@ def run_game(computer: IntCodeComputer, screen) -> int:
         computer.context.output.clear()
         draw_board(board, screen, score)
 
+        if TileType.BLOCK not in board.values():
+            break
+
         if computer_result == StepResult.HALT:
             break
         elif computer_result == StepResult.INPUT:
             c = screen.getch()
-            if c == curses.KEY_LEFT:
+            if c == curses.KEY_LEFT and not should_cheat:
                 computer.context.input.append(-1)
-            elif c == -1:
+            elif c == -1 and not should_cheat:
                 computer.context.input.append(0)
-            elif c == curses.KEY_RIGHT:
+            elif c == curses.KEY_RIGHT and not should_cheat:
                 computer.context.input.append(1)
             elif c == ord("q"):
                 break
-            sleep(1)
+            # cheat code is spacebar
+            elif c == ord(" ") or should_cheat:
+                should_cheat = True
+                sleep_time = 0.01
+                paddle_coord = None
+                ball_coord = None
+                for coord, tile in board.items():
+                    if tile == TileType.BALL:
+                        ball_coord = coord
+                    elif tile == TileType.HORIZONTAL_PADDLE:
+                        paddle_coord = coord
+
+                if paddle_coord[0] > ball_coord[0]:
+                    computer.context.input.append(-1)
+                elif paddle_coord[0] == ball_coord[0]:
+                    computer.context.input.append(0)
+                elif paddle_coord[0] < ball_coord[0]:
+                    computer.context.input.append(1)
+                else:
+                    raise RuntimeError("Weird equality class?")
+
+            sleep(sleep_time)
 
     return score
 
